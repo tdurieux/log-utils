@@ -1,9 +1,14 @@
 {
   "name": "@tdurieux/log-utils",
   "version": "0.0.1",
-  "description": "",
+  "description": "Library that allows to clean and parse log files.",
   "main": "lib/index.js",
+  "types": "./lib/index.d.ts",
   "author": "Thomas Durieux",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tdurieux/log-utils"
+  },
   "license": "MIT",
   "scripts": {
     "test": "jest --coverage=true",
