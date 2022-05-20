@@ -24,7 +24,7 @@ export default function parseLog(log: string) {
      */
     const parsers = [
       new JavaParser(),
-      new MavenParser(),
+    //   new MavenParser(),
       new JsParser(),
       new PyParser(),
       new ObjcParser(),

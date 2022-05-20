@@ -12,9 +12,8 @@ const test4 = new RegExp("    ✗ (?<test>.*)");
 const test5 = new RegExp("^FAIL (?<test>.*)");
 
 // Spec Files:	 5 passed, 2 failed, 7 total (1 completed) in
-const testSummary1 = new RegExp(
-  "Spec Files: +(?<passed>[0-9]+) passed, (?<failed>[0-9]+) failed, (?<total>[0-9]+) total"
-);
+const testSummary1 =
+  /Spec Files:\W*(?<passed>[0-9]+) passed, (?<failed>[0-9]+) failed, (?<total>[0-9]+) total/;
 
 const error = new RegExp("(.+):([0-9]+):([0-9]+) - error ([A-Z1-9]+): (.+)");
 
@@ -40,7 +39,7 @@ export default class JsParser extends Parser {
       this.startingMocha = true;
       this.totalTime = 0;
     }
-    let result;
+    let result: any;
     if ((result = testNoAssert.exec(line))) {
       this.tests.push({
         failure_group: "Test",
@@ -127,10 +126,13 @@ export default class JsParser extends Parser {
         logLine: lineNumber,
         name: "",
         body: "",
-        nbTest: result.groups.total,
-        nbFailure: result.groups.failure,
+        nbTest: parseInt(result.groups.total),
+        nbFailure: parseInt(result.groups.failed),
         nbError: 0,
-        nbSkipped: 0,
+        nbSkipped:
+          parseInt(result.groups.total) -
+          parseInt(result.groups.passed) -
+          parseInt(result.groups.failed),
       });
     } else if ((result = error.exec(line))) {
       this.errors.push({

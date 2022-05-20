@@ -54,8 +54,8 @@ export default class GenericParser extends Parser {
         type: "generic",
         failure_group: "Execution",
         message: result.groups.message,
-        line: result.groups.line,
-        column: result.groups.column,
+        line: parseInt(result.groups.line),
+        column: parseInt(result.groups.column),
         logLine: lineNumber,
       });
     }

@@ -216,7 +216,6 @@ export default class JavaParser extends Parser {
       if (this.inGroup != null && group.name != this.inGroup) {
         continue;
       }
-
       if (this.inGroup == null) {
         const result = group.start.exec(line);
         if (result != null) {
@@ -245,11 +244,11 @@ export default class JavaParser extends Parser {
             result.groups &&
             result.groups.nbTest
           ) {
-            this.currentElement.nbTest = result.groups.nbTest;
-            this.currentElement.nbFailure = result.groups.failure;
-            this.currentElement.nbError = result.groups.error;
-            this.currentElement.nbSkipped = result.groups.skipped;
-            this.currentElement.time = result.groups.time;
+            this.currentElement.nbTest = parseInt(result.groups.nbTest);
+            this.currentElement.nbFailure = parseInt(result.groups.failure);
+            this.currentElement.nbError = parseInt(result.groups.error);
+            this.currentElement.nbSkipped = parseInt(result.groups.skipped);
+            this.currentElement.time = parseInt(result.groups.time);
           }
           if (
             group.name == "graddle2" &&
@@ -262,7 +261,6 @@ export default class JavaParser extends Parser {
               this.currentElement.nbError++;
             }
           }
-          this.currentElement == null;
           if (
             group.startIsEnd === true &&
             group.type == "test" &&
@@ -287,7 +285,7 @@ export default class JavaParser extends Parser {
         result = group.element.exec(line);
         if (result != null) {
           if (result.groups.all_line) {
-            //this.currentElement.body += result.groups.all_line + '\n'
+            this.currentElement.body += result.groups.all_line + '\n'
           } else {
             const output = {
               type: group.type,
