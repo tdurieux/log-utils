@@ -12,9 +12,10 @@
   "license": "MIT",
   "scripts": {
     "test": "jest --coverage=true",
-    "build": "npm run clean && npm run build:lib",
+    "build": "npm run clean && npm run build:lib && npm run build:doc",
     "build:lib": "tsc",
-    "clean": "rimraf dest"
+    "build:doc": "typedoc --out docs --entryPointStrategy expand ./src",
+    "clean": "rimraf dest docs"
   },
   "dependencies": {
     "ansi-regex": "^6.0.1"
@@ -24,6 +25,7 @@
     "codecov": "^3.8.3",
     "jest": "^28.1.0",
     "ts-jest": "^28.0.2",
+    "typedoc": "^0.22.15",
     "typescript": "^4.6.4"
   }
 }

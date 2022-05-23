@@ -30,7 +30,13 @@ export interface MissingLicenseError extends GenericError {
     failure_group: "License";
     file: string;
 }
+/**
+ * The type of error extracted from the log
+ */
 export declare type ErrorType = GenericError | MissingMavenLibraryError | MissingLicenseError | MissingLibraryError;
+/**
+ * Test information extracted from the logs
+ */
 export interface TestType {
     failure_group: string;
     logLine: number;

@@ -11,7 +11,7 @@ import PyParser from "./PythonParser";
 import RubyParser from "./RubyParser";
 
 export default function parseLog(log: string) {
-  if (log == null) return null;
+  if (log == null) throw new Error("log is not defined");
   const job: Partial<{
     config: {
       language: string;
@@ -279,6 +279,6 @@ export default function parseLog(log: string) {
       commit,
     };
   } catch (e) {
-    console.error(e);
+    throw new Error(`Unable to parse log file: ${e}`);
   }
 }

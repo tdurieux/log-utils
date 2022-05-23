@@ -69,6 +69,11 @@ export const toRemove = [
   /\d{1,2} ?%/g,
 ];
 
+/**
+ * Check if a string is empty or if it is a comment
+ * @param str the string to test
+ * @returns true if the file is empty
+ */
 export function isEmpty(str: string) {
   const trimmedLine = str.trim();
   return (
@@ -79,10 +84,20 @@ export function isEmpty(str: string) {
   );
 }
 
+/**
+ * Split a string into lines
+ * @param str the string to split
+ * @returns an array of lines
+ */
 export function lines(str: string): string[] {
   return str.split(/\r\n|(?!\r\n)[\n-\r\x85\u2028\u2029]/);
 }
 
+/**
+ * Normalize the log file
+ * @param log the log to normalize
+ * @returns a normalized log
+ */
 export function normalizeLog(log: string) {
   const output = [];
   line: for (let line of lines(log)) {
@@ -104,6 +119,12 @@ export function normalizeLog(log: string) {
   return output.join("\n");
 }
 
+/**
+ * Clean a log file by removing useless lines
+ *
+ * @param input the log to clean
+ * @returns a cleaned log
+ */
 export function cleanLog(input: string) {
   if (input == null) {
     return null;
@@ -129,6 +150,12 @@ export function cleanLog(input: string) {
   return output.join("\n");
 }
 
+/**
+ * Parses a log file and returns useful information such as test results or errors
+ *
+ * @param input the log to parse
+ * @returns
+ */
 export function parseLog(input: string) {
   return parser(input);
 }

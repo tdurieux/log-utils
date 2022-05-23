@@ -6,4 +6,4 @@ export default function parseLog(log: string): {
     exitCode: number | null;
     reasons: ErrorType[];
     commit: string | null;
-} | null | undefined;
+};
