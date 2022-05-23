@@ -32,8 +32,8 @@ export default class ObjcParser extends Parser {
       this.tests.push({
         failure_group: "Test",
         logLine: lineNumber,
-        name: result.groups.test,
-        body: result.groups.message,
+        name: result.groups?.test ?? "",
+        body: result.groups?.message ?? "",
         nbTest: 1,
         nbFailure: 1,
         nbError: 0,
@@ -43,13 +43,13 @@ export default class ObjcParser extends Parser {
       this.tests.push({
         failure_group: "Test",
         logLine: lineNumber,
-        name: result.groups.test,
-        body: result.groups.message,
-        nbTest: result.groups.executed,
-        nbFailure: result.groups.failure,
+        name: result.groups?.test ?? "",
+        body: result.groups?.message ?? "",
+        nbTest: parseInt(result.groups?.executed ?? "0"),
+        nbFailure: parseInt(result.groups?.failure ?? "0"),
         nbError: 0,
         nbSkipped: 0,
-        time: parseFloat(result.groups.duration),
+        time: parseFloat(result.groups?.duration || "0"),
       });
     }
   }

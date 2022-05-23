@@ -1,4 +1,4 @@
-import Parser from "./Parser";
+import Parser, { TestType } from "./Parser";
 
 const test = new RegExp("^(.+)::(.+) ([^ ]+) +\\[(.+)\\%\\]");
 const test2 = new RegExp("^([^ ]+) +(.*): ([0-9]+) tests \\((.*) secs\\)");
@@ -37,7 +37,7 @@ const pyflakesStyleError = new RegExp("(.+):([0-9]+): (.+)");
 const compilationError = new RegExp("SyntaxError: invalid syntax");
 
 export default class PyParser extends Parser {
-  currentTest = null;
+  currentTest: TestType | null = null;
   totalTime = 0;
   inPyflakes = false;
 
@@ -105,12 +105,14 @@ export default class PyParser extends Parser {
         logLine: lineNumber,
         name: "",
         body: "",
-        nbTest: parseInt(result.groups.passed) + parseInt(result.groups.failed),
-        nbFailure: parseInt(result.groups.failed),
+        nbTest:
+          parseInt(result.groups?.passed ?? "0") +
+          parseInt(result.groups?.failed ?? "0"),
+        nbFailure: parseInt(result.groups?.failed ?? "0"),
         nbError: 0,
-        nbWarning: parseInt(result.groups.warning) || 0,
-        nbSkipped: parseInt(result.groups.skipped) || 0,
-        time: parseFloat(result.groups.time),
+        nbWarning: parseInt(result.groups?.warning ?? "0"),
+        nbSkipped: parseInt(result.groups?.skipped ?? "0"),
+        time: parseFloat(result.groups?.time ?? "0"),
       });
     } else if ((result = summaryTest2.exec(line))) {
       this.tool = "django";
@@ -142,7 +144,7 @@ export default class PyParser extends Parser {
         category: "library",
         failure_group: "Installation",
         type: "Missing Library",
-        library: result.groups.library,
+        library: result.groups?.library,
       });
     } else if ((result = test2.exec(line))) {
       this.tests.push({

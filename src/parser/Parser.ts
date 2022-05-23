@@ -48,12 +48,14 @@ export interface TestType {
   nbWarning?: number;
   nbError: number;
   nbSkipped: number;
+  nbAssertion?: number;
+  nbIncomplete?: number;
   time?: number;
 }
 export default abstract class Parser {
   tests: TestType[] = [];
   errors: ErrorType[] = [];
-  tool: string = null;
+  tool: string | null = null;
 
   constructor(readonly name: string, readonly languages: string[]) {}
 

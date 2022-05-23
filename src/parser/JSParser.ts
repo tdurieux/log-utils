@@ -101,7 +101,7 @@ export default class JsParser extends Parser {
       this.tests.push({
         failure_group: "Test",
         logLine: lineNumber,
-        name: result.groups.test,
+        name: result.groups?.test,
         body: "",
         nbTest: 1,
         nbFailure: 1,
@@ -113,7 +113,7 @@ export default class JsParser extends Parser {
       this.tests.push({
         failure_group: "Test",
         logLine: lineNumber,
-        name: result.groups.test,
+        name: result.groups?.test,
         body: "",
         nbTest: 1,
         nbFailure: 1,
@@ -126,13 +126,13 @@ export default class JsParser extends Parser {
         logLine: lineNumber,
         name: "",
         body: "",
-        nbTest: parseInt(result.groups.total),
-        nbFailure: parseInt(result.groups.failed),
+        nbTest: parseInt(result.groups?.total),
+        nbFailure: parseInt(result.groups?.failed),
         nbError: 0,
         nbSkipped:
-          parseInt(result.groups.total) -
-          parseInt(result.groups.passed) -
-          parseInt(result.groups.failed),
+          parseInt(result.groups?.total || "") -
+          parseInt(result.groups?.passed || "") -
+          parseInt(result.groups?.failed || ""),
       });
     } else if ((result = error.exec(line))) {
       this.errors.push({
@@ -151,8 +151,8 @@ export default class JsParser extends Parser {
         logLine: lineNumber,
         failure_group: "Installation",
         type: "Missing Library",
-        requiredBy: result.groups.required,
-        library: result.groups.library,
+        requiredBy: result.groups?.required,
+        library: result.groups?.library,
       });
     } else if ((result = unavailableVersion.exec(line))) {
       this.errors.push({
@@ -160,8 +160,8 @@ export default class JsParser extends Parser {
         logLine: lineNumber,
         failure_group: "Installation",
         type: "Missing Library",
-        library: result.groups.library,
-        version: result.groups.version,
+        library: result.groups?.library,
+        version: result.groups?.version,
       });
     }
   }

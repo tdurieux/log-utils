@@ -1,6 +1,6 @@
-import Parser from "./Parser";
+import Parser, { TestType } from "./Parser";
 export default class PyParser extends Parser {
-    currentTest: any;
+    currentTest: TestType | null;
     totalTime: number;
     inPyflakes: boolean;
     constructor();

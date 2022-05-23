@@ -1,6 +1,6 @@
-import Parser from "./Parser";
+import Parser, { TestType } from "./Parser";
 export default class PhpParser extends Parser {
-    currentTest: any;
+    currentTest: TestType | null;
     constructor();
     parse(line: string, lineNumber: number): void;
 }

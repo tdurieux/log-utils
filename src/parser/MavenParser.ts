@@ -1,4 +1,4 @@
-import Parser from "./Parser";
+import Parser, { ErrorType, TestType } from "./Parser";
 
 const startTestRun = new RegExp("Running (.*Tests?.*)$");
 const endTestRun = new RegExp(
@@ -64,8 +64,8 @@ export default class MavenParser extends Parser {
   isAudit = false;
   inGradleError = false;
 
-  currentError = null;
-  currentTest = null;
+  currentError: Partial<ErrorType> | null = null;
+  currentTest: Partial<TestType> | null = null;
 
   constructor() {
     super("MavenParser", ["java"]);
@@ -118,7 +118,9 @@ export default class MavenParser extends Parser {
       });
     } else if ((result = gradleRegex4.exec(line))) {
       this.inGradleError = true;
-      this.currentError = {
+      this.currentTest = {
+        failure_group: "Test",
+        logLine: lineNumber,
         name: result[2] + ":" + result[1],
         body: "",
         nbTest: 1,
@@ -127,12 +129,12 @@ export default class MavenParser extends Parser {
         nbSkipped: 0,
         time: 0,
       };
-      this.tests.push(this.currentError);
+      this.tests.push(this.currentTest as TestType);
     } else if ((result = endGradle1.exec(line))) {
       this.inGradleError = false;
       this.currentError = null;
     } else if (this.currentError != null && this.inGradleError === true) {
-      this.currentError.body += line + "\n";
+      if (this.currentTest) this.currentTest.body += line + "\n";
     } else if ((result = startAudit.exec(line))) {
       this.isAudit = true;
       return;
@@ -143,8 +145,8 @@ export default class MavenParser extends Parser {
       } else if ((result = auditError.exec(line))) {
         this.errors.push({
           file: result[1],
-          line: result[2],
-          column: result[4],
+          line: parseInt(result[2]),
+          column: parseInt(result[4]),
           message: result[5],
           type: "Checkstyle",
           failure_group: "Checkstyle",
@@ -162,11 +164,11 @@ export default class MavenParser extends Parser {
     if (compilationErrorLine1Result) {
       this.inCompilationErrorReport = true;
       this.inCompilationError = true;
-      this.errors.push(this.currentError);
+      if (this.currentError) this.errors.push(this.currentError as ErrorType);
       this.currentError = {
         file: compilationErrorLine1Result[1],
-        line: compilationErrorLine1Result[2],
-        column: compilationErrorLine1Result[3],
+        line: parseInt(compilationErrorLine1Result[2]),
+        column: parseInt(compilationErrorLine1Result[3]),
         message: compilationErrorLine1Result[4],
         type: "Compilation",
       };
@@ -176,11 +178,12 @@ export default class MavenParser extends Parser {
       compilationErrorLine1Result = compilationErrorLine1.exec(line);
       if (compilationErrorLine1Result) {
         this.inCompilationError = true;
-        this.errors.push(this.currentError);
+        if (this.currentError !== null)
+          this.errors.push(this.currentError as ErrorType);
         this.currentError = {
           file: compilationErrorLine1Result[1],
-          line: compilationErrorLine1Result[2],
-          column: compilationErrorLine1Result[3],
+          line: parseInt(compilationErrorLine1Result[2]),
+          column: parseInt(compilationErrorLine1Result[3]),
           message: compilationErrorLine1Result[4],
           type: "Compilation",
         };
@@ -189,11 +192,12 @@ export default class MavenParser extends Parser {
       compilationErrorLine1Result = compilationError2Line1.exec(line);
       if (compilationErrorLine1Result) {
         this.inCompilationError = true;
-        this.errors.push(this.currentError);
+        if (this.currentError !== null)
+          this.errors.push(this.currentError as ErrorType);
         this.currentError = {
           file: compilationErrorLine1Result[1],
-          line: compilationErrorLine1Result[2],
-          column: compilationErrorLine1Result[3],
+          line: parseInt(compilationErrorLine1Result[2]),
+          column: parseInt(compilationErrorLine1Result[3]),
           message: compilationErrorLine1Result[4],
           type: "Compilation",
         };
@@ -208,7 +212,7 @@ export default class MavenParser extends Parser {
           console.log(line);
           return;
         }
-        this.currentError.symbol = compilationErrorLine2Result[1];
+        this.currentError.message = compilationErrorLine2Result[1];
         return;
       }
       const compilationErrorLine3Result = compilationErrorLine3.exec(line);
@@ -219,7 +223,7 @@ export default class MavenParser extends Parser {
           console.log(line);
           return;
         }
-        this.currentError.location = compilationErrorLine3Result[1];
+        this.currentError.message = compilationErrorLine3Result[1];
         this.currentError = null;
         this.inCompilationError = false;
         return;
@@ -329,7 +333,7 @@ export default class MavenParser extends Parser {
         this.currentTest.nbSkipped = parseInt(end[4]);
         this.currentTest.time = parseFloat(end[5]);
 
-        this.tests.push(this.currentTest);
+        this.tests.push(this.currentTest as TestType);
 
         this.currentTest = null;
       } else {

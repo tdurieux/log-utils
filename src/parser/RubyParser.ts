@@ -35,18 +35,18 @@ export default class RubyParser extends Parser {
         logLine: lineNumber,
         name: "",
         body: "",
-        nbTest: parseInt(result.groups.nbTest),
-        nbFailure: parseInt(result.groups.failure),
-        nbError: parseInt(result.groups.error),
-        nbSkipped: parseInt(result.groups.skipped),
-        time: parseFloat(result.groups.time),
+        nbTest: parseInt(result.groups?.nbTest ?? "0"),
+        nbFailure: parseInt(result.groups?.failure ?? "0"),
+        nbError: parseInt(result.groups?.error ?? "0"),
+        nbSkipped: parseInt(result.groups?.skipped ?? "0"),
+        time: parseFloat(result.groups?.time ?? "0"),
       });
     } else if ((result = moduleNotFound.exec(line))) {
       this.errors.push({
         failure_group: "Installation",
         category: "library",
         type: "Missing Library",
-        library: result.groups.library,
+        library: result.groups?.library,
         logLine: lineNumber,
       });
     } else if ((result = notGem.exec(line))) {

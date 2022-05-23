@@ -1,15 +1,16 @@
 {
-    "compilerOptions": {
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "module": "commonjs",
-      "target": "es5",
-      "outDir": "lib",
-      "lib": ["es5"],
-      "moduleResolution": "node",
-      "declaration": true,
-      // "strict": true
-    },
-    "exclude": ["node_modules", "tests"],
-    "include": ["src"],
-  }
+  "compilerOptions": {
+    "esModuleInterop": false,
+    "experimentalDecorators": false,
+    "module": "commonjs",
+    "target": "es5",
+    "outDir": "lib",
+    "lib": ["es5"],
+    "moduleResolution": "node",
+    "declaration": true,
+    "strict": true,
+    "sourceMap": false
+  },
+  "exclude": ["node_modules", "tests"],
+  "include": ["src"]
+}

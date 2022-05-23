@@ -41,6 +41,8 @@ export interface TestType {
     nbWarning?: number;
     nbError: number;
     nbSkipped: number;
+    nbAssertion?: number;
+    nbIncomplete?: number;
     time?: number;
 }
 export default abstract class Parser {
@@ -48,7 +50,7 @@ export default abstract class Parser {
     readonly languages: string[];
     tests: TestType[];
     errors: ErrorType[];
-    tool: string;
+    tool: string | null;
     constructor(name: string, languages: string[]);
     isSupportedLanguage(language: string): boolean;
     abstract parse(line: string, lineNumber: number): void;

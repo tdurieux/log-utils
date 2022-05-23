@@ -1,4 +1,4 @@
-import Parser from "./Parser";
+import Parser, { TestType } from "./Parser";
 
 const timeRegex = new RegExp(
   "Time: ([0-9\\.]+) ([^,]+), Memory: ([0-9\\.]+)(.+)"
@@ -19,7 +19,7 @@ const missingPackage2 = new RegExp(
 );
 
 export default class PhpParser extends Parser {
-  currentTest = null;
+  currentTest: TestType | null = null;
   constructor() {
     super("PhpParser", ["php"]);
   }
@@ -79,18 +79,20 @@ export default class PhpParser extends Parser {
           name: "",
           body: "",
           nbTest: parseInt(test[1]),
+          nbAssertion: parseInt(test[2]),
+          nbError: 0,
+          nbFailure: 0,
+          nbSkipped: 0,
         };
       }
-      this.currentTest.nbTest = parseInt(test[1]);
-      this.currentTest.nbAssertion = parseInt(test[2]);
-      this.tests.push(this.currentTest);
+      if (this.currentTest !== null) this.tests.push(this.currentTest);
       this.currentTest = null;
     } else if ((test = missingPackage.exec(line))) {
       this.errors.push({
         category: "library",
         failure_group: "Installation",
         type: "Missing Library",
-        library: test.groups.library,
+        library: test.groups?.library,
         logLine: lineNumber,
       });
     } else if ((test = missingPackage2.exec(line))) {
@@ -98,7 +100,7 @@ export default class PhpParser extends Parser {
         category: "library",
         failure_group: "Installation",
         type: "Missing Library",
-        library: test.groups.library,
+        library: test.groups?.library,
         logLine: lineNumber,
       });
     }

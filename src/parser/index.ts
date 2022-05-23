@@ -5,7 +5,7 @@ import JsParser from "./JSParser";
 import MavenParser from "./MavenParser";
 import JavaParser from "./JavaParser";
 import ObjcParser from "./ObjcParser";
-import { ErrorType, TestType } from "./Parser";
+import Parser, { ErrorType, TestType } from "./Parser";
 import PhpParser from "./PHPParser";
 import PyParser from "./PythonParser";
 import RubyParser from "./RubyParser";
@@ -22,9 +22,9 @@ export default function parseLog(log: string) {
     /**
      * @type {Parser[]}
      */
-    const parsers = [
+    const parsers: Parser[] = [
       new JavaParser(),
-    //   new MavenParser(),
+      //   new MavenParser(),
       new JsParser(),
       new PyParser(),
       new ObjcParser(),
@@ -34,12 +34,12 @@ export default function parseLog(log: string) {
       new GenericParser(),
     ];
 
-    let exitCode: number = null;
+    let exitCode: number | null = null;
 
-    let tool: string = null;
+    let tool: string | null = null;
     const tests: TestType[] = [];
     const errors: ErrorType[] = [];
-    let commit: string = null;
+    let commit: string | null = null;
 
     let lineStart = 0;
     let lineNumber = 0;
@@ -94,7 +94,7 @@ export default function parseLog(log: string) {
             failure_group: "Installation",
             category: "credential",
             type: "Unable to clone",
-            message: result.groups.file,
+            message: result.groups?.file,
             logLine: lineNumber,
           });
         } else if (
@@ -106,7 +106,7 @@ export default function parseLog(log: string) {
             failure_group: "Installation",
             category: "credential",
             type: "Unable to clone",
-            message: result.groups.file,
+            message: result.groups?.file,
             logLine: lineNumber,
           });
         } else if (line.indexOf("Error: retrieving gpg key timed out.") != -1) {
@@ -192,7 +192,7 @@ export default function parseLog(log: string) {
           errors.push({
             failure_group: "Installation",
             category: "connection",
-            library: result.groups.file,
+            library: result.groups?.file,
             type: "Missing Library",
             logLine: lineNumber,
           });
@@ -203,7 +203,7 @@ export default function parseLog(log: string) {
             failure_group: "Installation",
             category: "library",
             type: "Missing Library",
-            library: result.groups.file,
+            library: result.groups?.file,
             logLine: lineNumber,
           });
         } else if (
@@ -215,7 +215,7 @@ export default function parseLog(log: string) {
             failure_group: "Installation",
             category: "credential",
             type: "Unable to push",
-            message: result.groups.file,
+            message: result.groups?.file,
             logLine: lineNumber,
           });
         } else if (line.toLowerCase().indexOf("address already in use") > -1) {
@@ -244,7 +244,7 @@ export default function parseLog(log: string) {
       Array.prototype.push.apply(tests, parser.tests);
       Array.prototype.push.apply(errors, parser.errors);
 
-      if (parser.tool != null && tool == null) {
+      if (parser.tool != null && tool === null) {
         tool = parser.tool;
       }
     }

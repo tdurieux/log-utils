@@ -204,8 +204,8 @@ const groups = [
 ];
 
 export default class JavaParser extends Parser {
-  inGroup = null;
-  currentElement = null;
+  inGroup: string | null = null;
+  currentElement: any | null = null;
 
   constructor() {
     super("JavaParser", ["java"]);
@@ -223,8 +223,8 @@ export default class JavaParser extends Parser {
 
           if (group.type == "test") {
             this.currentElement = {
-              name: result.groups.name,
-              class: result.groups.class,
+              name: result.groups?.name,
+              class: result.groups?.class,
               body: "",
               nbTest: 1,
               nbFailure: 0,
@@ -242,13 +242,13 @@ export default class JavaParser extends Parser {
           if (
             this.currentElement != null &&
             result.groups &&
-            result.groups.nbTest
+            result.groups?.nbTest
           ) {
-            this.currentElement.nbTest = parseInt(result.groups.nbTest);
-            this.currentElement.nbFailure = parseInt(result.groups.failure);
-            this.currentElement.nbError = parseInt(result.groups.error);
-            this.currentElement.nbSkipped = parseInt(result.groups.skipped);
-            this.currentElement.time = parseInt(result.groups.time);
+            this.currentElement.nbTest = parseInt(result.groups?.nbTest);
+            this.currentElement.nbFailure = parseInt(result.groups?.failure);
+            this.currentElement.nbError = parseInt(result.groups?.error);
+            this.currentElement.nbSkipped = parseInt(result.groups?.skipped);
+            this.currentElement.time = parseInt(result.groups?.time);
           }
           if (
             group.name == "graddle2" &&
@@ -264,11 +264,11 @@ export default class JavaParser extends Parser {
           if (
             group.startIsEnd === true &&
             group.type == "test" &&
-            !result.groups.nbTest
+            !result.groups?.nbTest
           ) {
             this.currentElement = {
-              name: result.groups.name,
-              class: result.groups.class,
+              name: result.groups?.name,
+              class: result.groups?.class,
               body: "",
               nbTest: 1,
               nbFailure: 0,
@@ -284,10 +284,10 @@ export default class JavaParser extends Parser {
         }
         result = group.element.exec(line);
         if (result != null) {
-          if (result.groups.all_line) {
-            this.currentElement.body += result.groups.all_line + '\n'
+          if (result.groups?.all_line) {
+            this.currentElement.body += result.groups?.all_line + "\n";
           } else {
-            const output = {
+            const output: { [key: string]: string } = {
               type: group.type,
             };
             for (let key in result.groups) {

@@ -1,4 +1,4 @@
-import Parser from "./Parser";
+import Parser, { ErrorType, TestType } from "./Parser";
 export default class MavenParser extends Parser {
     inCheckstyleReport: boolean;
     inCompilationErrorReport: boolean;
@@ -6,8 +6,8 @@ export default class MavenParser extends Parser {
     startingMaven: boolean;
     isAudit: boolean;
     inGradleError: boolean;
-    currentError: any;
-    currentTest: any;
+    currentError: Partial<ErrorType> | null;
+    currentTest: Partial<TestType> | null;
     constructor();
     parse(line: string, lineNumber: number): void;
 }
