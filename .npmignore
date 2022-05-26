@@ -1,6 +1,6 @@
 src
 tests
-jest.config.js
+jest.config.cjs
 README.md
 tsconfig.json
 coverage
