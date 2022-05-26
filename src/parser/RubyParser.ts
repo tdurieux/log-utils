@@ -1,4 +1,4 @@
-import Parser from "./Parser";
+import Parser from "./Parser.js";
 
 const test = new RegExp("^([\\.sF\\*]{4,})$");
 const test2 = new RegExp(

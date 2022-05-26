@@ -1,4 +1,4 @@
-import Parser from "./Parser";
+import Parser from "./Parser.js";
 
 const independents = [
   {
@@ -337,5 +337,3 @@ export default class JavaParser extends Parser {
     }
   }
 }
-
-module.exports.Parser = JavaParser;

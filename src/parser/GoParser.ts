@@ -1,4 +1,4 @@
-import Parser from "./Parser";
+import Parser from "./Parser.js";
 
 const test1 = new RegExp("--- PASS: ([^ ]+) ?(\\(([0-9.,:]+)([^\t]+)\\))?");
 const test2 = new RegExp("--- FAIL: ([^ ]+) ?(\\(([0-9.,:]+)([^\t]+)\\))?");

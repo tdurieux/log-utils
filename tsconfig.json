@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
-    "esModuleInterop": false,
-    "experimentalDecorators": false,
-    "module": "commonjs",
-    "target": "es5",
+    "target": "es2018",
+    "module": "es2020",
     "outDir": "lib",
-    "lib": ["es5"],
+    "sourceMap": true,
+    "allowJs": true,
+    "esModuleInterop": true,
     "moduleResolution": "node",
-    "declaration": true,
-    "strict": true,
-    "sourceMap": false
+    "strict": true
   },
-  "exclude": ["node_modules", "tests"],
-  "include": ["src"]
+  "exclude": ["./node_modules", "./tests"],
+  "include": ["./src"]
 }

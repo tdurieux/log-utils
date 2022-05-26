@@ -1,5 +1,5 @@
 import ansiRegex from "ansi-regex";
-import parser from "./parser";
+import parser from "./parser/index.js";
 
 export const properties = [
   /(hostname:).*/g,

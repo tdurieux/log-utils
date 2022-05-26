@@ -1,14 +1,13 @@
-import { isEmpty, startWith } from "..";
-import GenericParser from "./GenericParser";
-import GoParser from "./GoParser";
-import JsParser from "./JSParser";
-import MavenParser from "./MavenParser";
-import JavaParser from "./JavaParser";
-import ObjcParser from "./ObjcParser";
-import Parser, { ErrorType, TestType } from "./Parser";
-import PhpParser from "./PHPParser";
-import PyParser from "./PythonParser";
-import RubyParser from "./RubyParser";
+import { isEmpty, startWith } from "../index.js";
+import GenericParser from "./GenericParser.js";
+import GoParser from "./GoParser.js";
+import JsParser from "./JSParser.js";
+import JavaParser from "./JavaParser.js";
+import ObjcParser from "./ObjcParser.js";
+import Parser, { ErrorType, TestType } from "./Parser.js";
+import PhpParser from "./PHPParser.js";
+import PyParser from "./PythonParser.js";
+import RubyParser from "./RubyParser.js";
 
 export default function parseLog(log: string) {
   if (log == null) throw new Error("log is not defined");

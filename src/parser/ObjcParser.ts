@@ -1,4 +1,4 @@
-import Parser from "./Parser";
+import Parser from "./Parser.js";
 
 const test = new RegExp(
   "([0-9]+)/([0-9]+) Test +#([0-9]+): (.+) \\.+ +([^ ]+) +(.+) sec"

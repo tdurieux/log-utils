@@ -1,4 +1,4 @@
-import Parser, { TestType } from "./Parser";
+import Parser, { TestType } from "./Parser.js";
 
 const timeRegex = new RegExp(
   "Time: ([0-9\\.]+) ([^,]+), Memory: ([0-9\\.]+)(.+)"

@@ -1,4 +1,4 @@
-import Parser from "./Parser";
+import Parser from "./Parser.js";
 
 const compilationError = new RegExp(
   "(?<category>[a-zA-Z]+)\\[(?<id>[0-9]+)\\] (?<message>[^:]+): (?<parameter>.+)"

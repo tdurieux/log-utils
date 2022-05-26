@@ -4,6 +4,7 @@
   "description": "Library that allows to clean and parse log files.",
   "main": "lib/index.js",
   "types": "./lib/index.d.ts",
+  "type": "module",
   "author": "Thomas Durieux",
   "repository": {
     "type": "git",
@@ -11,11 +12,11 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "jest --coverage=true",
+    "test": "ts-node -O '{\"module\":\"commonjs\"}' node_modules/jest/bin/jest.js --coverage=true",
     "build": "npm run clean && npm run build:lib && npm run build:doc",
     "build:lib": "tsc",
     "build:doc": "typedoc --out docs --entryPointStrategy expand ./src",
-    "clean": "rimraf dest docs"
+    "clean": "rimraf lib docs"
   },
   "dependencies": {
     "ansi-regex": "^6.0.1"

@@ -1,4 +1,4 @@
-import Parser, { TestType } from "./Parser";
+import Parser, { TestType } from "./Parser.js";
 
 const test = new RegExp("^(.+)::(.+) ([^ ]+) +\\[(.+)\\%\\]");
 const test2 = new RegExp("^([^ ]+) +(.*): ([0-9]+) tests \\((.*) secs\\)");
@@ -250,5 +250,3 @@ export default class PyParser extends Parser {
     }
   }
 }
-
-module.exports.Parser = PyParser;

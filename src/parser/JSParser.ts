@@ -1,4 +1,4 @@
-import Parser from "./Parser";
+import Parser from "./Parser.js";
 
 const testNoAssert = new RegExp(
   "✖ (.*) Test finished without running any assertions"

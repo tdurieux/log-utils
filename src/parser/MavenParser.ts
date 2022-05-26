@@ -1,4 +1,4 @@
-import Parser, { ErrorType, TestType } from "./Parser";
+import Parser, { ErrorType, TestType } from "./Parser.js";
 
 const startTestRun = new RegExp("Running (.*Tests?.*)$");
 const endTestRun = new RegExp(
