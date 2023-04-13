@@ -67,6 +67,9 @@ export default function parseLog(log: string) {
               language: line.replace("Build language: ", ""),
             };
           }
+        } else if (line.indexOf("* [new ref]") != -1) {
+          commit = line.substring(line.indexOf("* [new ref]")).trim();
+          commit = commit.substring(0, commit.indexOf(" "));
         } else if (line.indexOf("$ git checkout -qf ") != -1) {
           commit = line.replace("$ git checkout -qf ", "");
         } else if (line.indexOf("git fetch origin ") != -1) {
